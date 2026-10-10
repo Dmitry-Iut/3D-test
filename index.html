@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1424">
+  <title>Амфора мудрецов</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <canvas id="gl"></canvas>
+
+  <!-- Верхняя панель во время игры -->
+  <div id="hud" class="hidden">
+    <div class="top">
+      <button id="btnMenu" class="ico" aria-label="В меню">&#9776;</button>
+      <div class="prog">
+        <div class="bar"><i id="bar"></i></div>
+        <span id="cnt">0 / 0</span>
+      </div>
+      <button id="btnHint" class="ico" aria-label="Подсказка">&#128161;</button>
+      <button id="btnMute" class="ico" aria-label="Звук">&#128266;</button>
+    </div>
+    <p id="help">Возьми осколок и поднеси к вазе. Пустое место &mdash; вращать камеру, щипок &mdash; приблизить.</p>
+  </div>
+
+  <!-- Свиток с письменами (после сборки) -->
+  <div id="scroll" class="hidden">
+    <div id="scTitle"></div>
+    <ol id="scList"></ol>
+  </div>
+
+  <!-- Главное меню -->
+  <div id="menu" class="overlay">
+    <div class="card">
+      <h1>Амфора мудрецов</h1>
+      <p class="lead">Ваза разбилась на осколки. Собери её, а потом поверни и прочитай, что древний мастер написал на глине.</p>
+      <div class="levels">
+        <button class="lvl" data-level="easy">
+          <b>Лёгкий</b><span>15 осколков, с подсказками</span>
+        </button>
+        <button class="lvl" data-level="normal">
+          <b>Обычный</b><span>28 осколков</span>
+        </button>
+        <button class="lvl" data-level="hard">
+          <b>Мастер</b><span>45 осколков, без помощи</span>
+        </button>
+      </div>
+      <p class="note">Со звуком играть лучше.</p>
+    </div>
+  </div>
+
+  <!-- Финал -->
+  <div id="final" class="overlay hidden">
+    <div class="card">
+      <p class="by" id="finTitle">Письмена прочитаны</p>
+      <p class="gr" id="finGr"></p>
+      <p class="ru" id="finRu"></p>
+      <p class="by" id="finBy"></p>
+      <div class="row">
+        <button id="btnAgain" class="main">Собрать новую вазу</button>
+        <button id="btnClose" class="ghost">Ещё полюбоваться</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="thoughts.js"></script>
+  <script src="math.js"></script>
+  <script src="audio.js"></script>
+  <script src="shaders.js"></script>
+  <script src="vase.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

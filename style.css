@@ -1,0 +1,247 @@
+:root {
+  --night: #0b1424;
+  --night-2: #16264a;
+  --lapis: #27407a;
+  --gold: #e3b45a;
+  --gold-dim: #a8803a;
+  --marble: #f1ebdc;
+  --clay: #c8672f;
+  --serif: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--night);
+  color: var(--marble);
+  font-family: var(--serif);
+  -webkit-user-select: none;
+  user-select: none;
+  overscroll-behavior: none;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 50% 38%, #25396b 0%, rgba(37, 57, 107, 0) 60%),
+    radial-gradient(ellipse at 50% 100%, #3a2412 0%, rgba(58, 36, 18, 0) 55%),
+    var(--night);
+}
+
+#gl {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- Верхняя панель ---------- */
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+}
+
+#hud .top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+}
+
+.ico {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-dim);
+  background: rgba(11, 20, 36, 0.7);
+  color: var(--gold);
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+}
+.ico:active { background: rgba(227, 180, 90, 0.25); }
+.ico:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.prog {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.prog .bar {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(241, 235, 220, 0.14);
+  overflow: hidden;
+}
+.prog .bar i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+  transition: width 0.35s ease;
+}
+.prog span { font-size: 14px; color: var(--marble); opacity: 0.85; }
+
+#help {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: max(14px, env(safe-area-inset-bottom, 0px));
+  margin: 0 auto;
+  max-width: 460px;
+  padding: 0 18px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.4;
+  color: rgba(241, 235, 220, 0.7);
+}
+
+/* ---------- Свиток ---------- */
+#scroll {
+  position: fixed;
+  left: 50%;
+  bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  width: min(560px, calc(100% - 24px));
+  padding: 14px 16px 12px;
+  border-radius: 10px;
+  background: rgba(11, 20, 36, 0.82);
+  border: 1px solid var(--gold-dim);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+#scTitle { font-size: 14px; margin-bottom: 8px; color: var(--gold); }
+#scList { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+#scList li {
+  position: relative;
+  flex: 1 1 120px;
+  padding: 8px 10px 9px;
+  border-radius: 6px;
+  background: rgba(241, 235, 220, 0.06);
+  overflow: hidden;
+  min-height: 56px;
+}
+#scList li::before {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 3px;
+  width: calc(var(--p, 0) * 100%);
+  background: var(--gold);
+}
+#scList li b { display: block; font-size: 15px; letter-spacing: 0.06em; color: var(--marble); }
+#scList li span { display: block; margin-top: 3px; font-size: 13px; opacity: 0.85; }
+#scList li.off b, #scList li.off span { color: rgba(241, 235, 220, 0.35); }
+#scList li.on { background: rgba(227, 180, 90, 0.16); }
+#scList li.on b { color: var(--gold); }
+
+/* ---------- Оверлеи ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(7, 12, 22, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 5;
+}
+
+.card {
+  width: min(470px, 100%);
+  padding: 28px 24px 22px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(22, 38, 74, 0.94), rgba(11, 20, 36, 0.96));
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.card h1 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+}
+.card .lead { margin: 0 0 22px; font-size: 17px; line-height: 1.5; color: var(--marble); }
+.card .note { margin: 18px 0 0; font-size: 13px; opacity: 0.6; }
+
+.levels { display: grid; gap: 10px; }
+.lvl {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 13px 16px;
+  text-align: left;
+  font-family: var(--serif);
+  color: var(--marble);
+  border: 1px solid var(--gold-dim);
+  border-radius: 8px;
+  background: rgba(241, 235, 220, 0.05);
+  cursor: pointer;
+}
+.lvl b { font-size: 18px; color: var(--gold); }
+.lvl span { font-size: 14px; opacity: 0.75; }
+.lvl:hover, .lvl:active { background: rgba(227, 180, 90, 0.16); }
+
+.card .gr { margin: 8px 0 6px; font-size: 25px; line-height: 1.3; letter-spacing: 0.08em; color: var(--gold); }
+.card .ru { margin: 0 0 8px; font-size: 20px; line-height: 1.4; }
+.card .by { margin: 0; font-size: 14px; opacity: 0.7; }
+
+.row { display: grid; gap: 10px; margin-top: 20px; }
+.row button {
+  padding: 13px 16px;
+  font-family: var(--serif);
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.row .main { background: var(--gold); border: 1px solid var(--gold); color: #2a1a05; font-weight: 700; }
+.row .ghost { background: transparent; border: 1px solid var(--gold-dim); color: var(--marble); }
+
+/* ---------- Подсказка-тост ---------- */
+#toast {
+  position: fixed;
+  left: 50%;
+  top: calc(env(safe-area-inset-top, 0px) + 76px);
+  transform: translate(-50%, -8px);
+  max-width: min(420px, calc(100% - 32px));
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: rgba(11, 20, 36, 0.9);
+  border: 1px solid var(--gold-dim);
+  color: var(--marble);
+  font-size: 15px;
+  line-height: 1.35;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 6;
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-height: 520px) {
+  .card { padding: 16px; }
+  .card h1 { font-size: 26px; }
+  .card .lead { font-size: 15px; margin-bottom: 12px; }
+  .lvl { padding: 8px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prog .bar i, #toast { transition: none; }
+}
